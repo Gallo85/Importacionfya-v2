@@ -87,45 +87,43 @@
         </div>
     </div>
 
-    <!-- 🔹 Últimas Facturas -->
+    <!-- 🔹 Resumen del Inventario -->
     <div class="card shadow-sm border-0 mt-5">
-        <div class="card-body">
-            <h5 class="card-title text-secondary"><i class="bi bi-clock-history"></i> Últimas Facturas</h5>
+        <div class="card-body text-center">
+            <h5 class="card-title text-secondary"><i class="bi bi-box-seam"></i> Detalle del Inventario</h5>
             <hr>
-            <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead class="table-primary text-center">
-                        <tr>
-                            <th>#</th>
-                            <th>Cliente</th>
-                            <th>Fecha</th>
-                            <th>Total</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for factura in ultimas_facturas %}
-                        <tr class="text-center">
-                            <td>{{ factura.id }}</td>
-                            <td>{{ factura.cliente }}</td>
-                            <td>{{ factura.fecha|date:"d/m/Y H:i" }}</td>
-                            <td class="text-primary fw-bold">${{ factura.total|floatformat:2|intcomma }}</td>
-                            <td>
-                                <a href="{% url 'facturacion:detalle_factura' factura.id %}" class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-eye"></i> Ver
-                                </a>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">⚠️ No hay facturas recientes.</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <div class="row justify-content-center g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card shadow-sm border-0 text-center bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title text-secondary"><i class="bi bi-phone"></i> Total iPhones</h5>
+                            <h2 class="fw-bold text-primary">{{ total_iphones|intcomma }}</h2>
+                            <p class="text-muted small">Unidades disponibles</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card shadow-sm border-0 text-center bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title text-secondary"><i class="bi bi-laptop"></i> Total Macs</h5>
+                            <h2 class="fw-bold text-success">{{ total_macs|intcomma }}</h2>
+                            <p class="text-muted small">Unidades disponibles</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card shadow-sm border-0 text-center bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title text-secondary"><i class="bi bi-headphones"></i> Total Accesorios</h5>
+                            <h2 class="fw-bold text-warning">{{ total_accesorios|intcomma }}</h2>
+                            <p class="text-muted small">Unidades disponibles</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
 {% endblock %}
 

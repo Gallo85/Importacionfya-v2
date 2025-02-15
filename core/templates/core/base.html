@@ -12,47 +12,58 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
     
     <style>
-        /* Ajustes del Navbar */
+        /* 🔹 Ajuste del Navbar */
         .navbar {
             position: fixed;
             width: 100%;
+            top: 0;
             z-index: 1050;
         }
 
-        /* Sidebar Responsivo */
+        /* 🔹 Sidebar fijo */
         .sidebar {
             width: 250px;
             height: 100vh;
-            background: #f8f9fa;
-            box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+            background: #212529;
+            color: white;
             position: fixed;
-            left: -250px; /* Oculto en móviles */
-            top: 56px; /* Justo debajo del navbar */
-            transition: left 0.3s ease-in-out;
-            z-index: 1050;
-        }
-
-        /* Mostrar el sidebar cuando tiene la clase "show" */
-        .sidebar.show {
+            top: 56px; /* Ajuste para que no tape el navbar */
             left: 0;
+            box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Ajuste del contenido principal */
+        /* 🔹 Ajuste del contenido principal */
         .content {
             flex-grow: 1;
             padding: 15px;
             margin-left: 250px;
+            margin-top: 70px; /* 🔹 Ajusta este valor para bajarlo más */
             transition: margin-left 0.3s ease-in-out;
         }
 
-        /* Diseño responsivo: ocultar sidebar en móviles */
+        /* 🔹 Sidebar en móviles */
         @media (max-width: 768px) {
             .sidebar {
                 left: -250px;
+                position: fixed;
+                z-index: 1000;
+            }
+            .sidebar.show {
+                left: 0;
             }
             .content {
                 margin-left: 0;
+                width: 100%;
             }
+        }
+
+        /* ✅ Evita que el sidebar oculte el contenido */
+        .sidebar .mt-auto {
+            margin-top: auto;
+            padding: 10px;
         }
     </style>
 </head>
@@ -73,17 +84,11 @@
 
     <!-- 🔹 Layout principal -->
     <div class="d-flex">
-        <!-- Sidebar (NO tiene navbar dentro) -->
-        <div class="sidebar bg-dark text-white shadow-lg p-3" id="sidebar">
-            <!-- Botón de cerrar en móviles -->
-            <button class="btn btn-danger d-lg-none mb-2 w-100" id="closeSidebar">
-                <i class="bi bi-x-lg"></i> Cerrar
-            </button>
-            {% include 'core/sidebar.html' %}
-        </div>
+        <!-- Sidebar (Cargado desde sidebar.html) -->
+        {% include 'core/sidebar.html' %}
 
         <!-- Contenido Principal -->
-        <div class="content container mt-4">
+        <div class="content">
             {% block content %}{% endblock %}
         </div>
     </div>
@@ -96,16 +101,9 @@
         document.addEventListener("DOMContentLoaded", function () {
             const sidebar = document.getElementById("sidebar");
             const sidebarToggle = document.getElementById("sidebarToggle");
-            const closeSidebar = document.getElementById("closeSidebar");
 
-            // Evento para abrir el sidebar
             sidebarToggle.addEventListener("click", function () {
                 sidebar.classList.toggle("show");
-            });
-
-            // Evento para cerrar el sidebar
-            closeSidebar.addEventListener("click", function () {
-                sidebar.classList.remove("show");
             });
 
             // Cerrar sidebar si se hace clic fuera en móviles
