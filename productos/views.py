@@ -18,6 +18,8 @@ def inventario(request):
     precio_min = request.GET.get('precio_min', '')
     precio_max = request.GET.get('precio_max', '')
     imei = request.GET.get('imei', '')
+    capacidad = request.GET.get('capacidad', '')
+    ubicacion = request.GET.get('ubicacion', '')
 
     productos = []
 
@@ -41,6 +43,10 @@ def inventario(request):
         queryset = [p for p in queryset if p.precio and p.precio <= float(precio_max)]
     if imei:
         queryset = [p for p in queryset if hasattr(p, 'imei') and imei in p.imei]
+    if capacidad:
+        queryset = [p for p in queryset if hasattr(p, 'capacidad') and capacidad.lower() in str(p.capacidad).lower()]
+    if ubicacion:
+        queryset = [p for p in queryset if hasattr(p, 'ubicacion') and ubicacion.lower() in p.ubicacion.lower()]
 
     # Construir la lista de productos con su tipo
     for p in queryset:
